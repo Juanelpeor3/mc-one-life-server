@@ -1,0 +1,38 @@
+services:
+  mc:
+    build: .
+    container_name: mc-hardcore
+    restart: unless-stopped
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      VERSION: "${VERSION:-LATEST}"
+      TYPE: "PAPER"
+      HARDCORE: "true"
+      DIFFICULTY: "hard"
+      MODE: "survival"
+      ALLOW_FLIGHT: "true"           # evita que el servidor expulse por volar
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+
+      # Whitelist
+      WHITELIST: "${WHITELIST}"
+      ENFORCE_WHITELIST: "true"
+      OPS: "${OPS}"
+
+      # Renderizado
+      VIEW_DISTANCE: "${VIEW_DISTANCE:-16}"
+      SIMULATION_DISTANCE: "${SIMULATION_DISTANCE:-10}"
+
+      # Rendimiento
+      MEMORY: ""
+      INIT_MEMORY: "${INIT_MEMORY:-4G}"
+      MAX_MEMORY: "${MAX_MEMORY:-6G}"
+      USE_AIKAR_FLAGS: "true"
+      USE_LARGE_PAGES: "true"
+    volumes:
+      - mc-data:/data
+
+volumes:
+  mc-data:
